@@ -147,9 +147,9 @@ export default function PlacePage() {
             <div className='mt-2 gap-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
               {addedPhotos.length > 0 &&
                 addedPhotos.map((link) => (
-                  <div className='h-32'>
+                  <div className='h-32 flex'>
                     <img
-                      className='rounded-2xl'
+                      className='rounded-2xl w-full object-cover position-center'
                       src={'http://localhost:4000/uploads/' + link}
                       alt=''
                     />
