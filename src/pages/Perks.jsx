@@ -103,35 +103,74 @@ export default function Perks({ selected, onChange }) {
     </svg>
   )
 
+  function handleCheckboxClick(e) {
+    const { checked, name } = e.target
+    if (checked) {
+      onChange([...selected, name])
+    } else {
+      onChange([...selected.filter((selectedName) => selectedName !== name)])
+    }
+  }
+
   return (
     <>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('wifi')}
+          name='wifi'
+          onChange={handleCheckboxClick}
+        />
         {wifiIcon}
         <span className='flex'>Wifi</span>
       </label>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('parking')}
+          name='parking'
+          onChange={handleCheckboxClick}
+        />
         {parkingIcon}
         <span>Free parking slot</span>
       </label>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('tv')}
+          name='tv'
+          onChange={handleCheckboxClick}
+        />
         {tvIcon}
         <span>TV</span>
       </label>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('pets')}
+          name='pets'
+          onChange={handleCheckboxClick}
+        />
         {petsIcon}
         <span>Pets</span>
       </label>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('entrance')}
+          name='entrance'
+          onChange={handleCheckboxClick}
+        />
         {entranceIcon}
         <span>Private Entrance</span>
       </label>
       <label className='items-center border rounded-2xl p-5 flex gap-2 cursor-pointer'>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          checked={selected.includes('radio')}
+          name='radio'
+          onChange={handleCheckboxClick}
+        />
         {radioIcon}
         <span>Radio</span>
       </label>

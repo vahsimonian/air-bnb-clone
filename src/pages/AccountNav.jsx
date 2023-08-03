@@ -1,32 +1,15 @@
-import React, { useContext, useState } from 'react'
-import { UserContext } from './UserContext'
-import { Link, Navigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import PlacePage from './PlacePage'
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
-export default function AccountPage() {
-  const [redirect, setRedirect] = useState(null)
-  const { ready, user, setUser } = useContext(UserContext)
-  let { subpage } = useParams()
+export default function AccountNav() {
+  const { pathname } = useLocation()
+  let subpage = pathname.split('/')?.[2]
   if (subpage === undefined) {
     subpage = 'profile'
   }
 
-  async function logout() {
-    await axios.post('/logout')
-    setRedirect('/')
-    setUser(null)
-  }
-
-  if (!ready) {
-    return 'Loading'
-  }
-
-  if (ready && !user && !redirect) {
-    return <Navigate to={'/login'} />
-  }
-
   function linkClasses(type = null) {
+    const isActive = pathname === '/account' && type === 'profile'
     let classes = 'inline-flex gap-1 py-2 px-6 rounded-full'
     if (type === subpage) {
       classes += ' bg-primary text-white'
@@ -34,10 +17,6 @@ export default function AccountPage() {
       classes += ' bg-gray-200'
     }
     return classes
-  }
-
-  if (redirect) {
-    return <Navigate to={redirect} />
   }
 
   const userIcon = (
@@ -92,27 +71,16 @@ export default function AccountPage() {
   )
 
   return (
-    <div>
-      <nav className='w-full flex justify-center mt-8 gap-2'>
-        <Link className={linkClasses('profile')} to={'/account'}>
-          {userIcon} My profile
-        </Link>
-        <Link className={linkClasses('bookings')} to={'/account/bookings'}>
-          {listIcon} My bookings
-        </Link>
-        <Link className={linkClasses('places')} to={'/account/places'}>
-          {buildingIcon} My accommodation
-        </Link>
-      </nav>
-      {subpage === 'profile' && (
-        <div className='text-center mt-8 max-w-lg mx-auto'>
-          Looged in {user.name} ({user.email}) <br />
-          <button onClick={logout} className='primary max-w-sm mt-2'>
-            Logout
-          </button>
-        </div>
-      )}
-      {subpage === 'places' && <PlacePage />}
-    </div>
+    <nav className='w-full flex justify-center mt-8 gap-2'>
+      <Link className={linkClasses('profile')} to={'/account'}>
+        {userIcon} My profile
+      </Link>
+      <Link className={linkClasses('bookings')} to={'/account/bookings'}>
+        {listIcon} My bookings
+      </Link>
+      <Link className={linkClasses('places')} to={'/account/places'}>
+        {buildingIcon} My accommodation
+      </Link>
+    </nav>
   )
 }
